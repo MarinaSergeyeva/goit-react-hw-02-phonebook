@@ -3,18 +3,18 @@ import React, { Component } from "react";
 export default class ContactForm extends Component {
   state = {
     name: "",
-    number: ""
+    number: "",
   };
 
-  addContact = e => {
+  handleChange = (e) => {
     const { name, value } = e.target;
 
     this.setState({
-      [name]: value
+      [name]: value,
     });
   };
 
-  handleSubmit = e => {
+  handleSubmit = (e) => {
     e.preventDefault();
 
     this.props.addItem(this.state);
@@ -28,11 +28,21 @@ export default class ContactForm extends Component {
       <form onSubmit={this.handleSubmit}>
         <label>
           Name:
-          <input type="text" name="name" value={name} onChange={this.addContact} />
+          <input
+            type="text"
+            name="name"
+            value={name}
+            onChange={this.handleChange}
+          />
         </label>
         <label>
           Number:
-          <input type="text" name="number" value={number} onChange={this.addContact} />
+          <input
+            type="text"
+            name="number"
+            value={number}
+            onChange={this.handleChange}
+          />
         </label>
         <button type="submit">Add contact</button>
       </form>
