@@ -1,25 +1,41 @@
-import React from "react";
+import React, { Component } from "react";
 
-const ContactForm = ({ name, number, handleSubmit, addContact }) => {
-  return (
-    <form onSubmit={handleSubmit}>
-      <label>
-        Name:
-        <input type="text" name="name" onChange={addContact} />
-      </label>
-      <label>
-        Number:
-        <input
-          type="text"
-          // pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
-          name="number"
-          onChange={addContact}
-        />
-        {/* <small>Format: 123-456-7890</small> */}
-      </label>
-      <button type="submit">Add contact</button>
-    </form>
-  );
-};
+export default class ContactForm extends Component {
+  state = {
+    name: "",
+    number: ""
+  };
 
-export default ContactForm;
+  addContact = e => {
+    const { name, value } = e.target;
+
+    this.setState({
+      [name]: value
+    });
+  };
+
+  handleSubmit = e => {
+    e.preventDefault();
+
+    this.props.addItem(this.state);
+    this.setState({ name: "", number: "" });
+  };
+
+  render() {
+    const { name, number } = this.state;
+    console.log("props", this.props);
+    return (
+      <form onSubmit={this.handleSubmit}>
+        <label>
+          Name:
+          <input type="text" name="name" value={name} onChange={this.addContact} />
+        </label>
+        <label>
+          Number:
+          <input type="text" name="number" value={number} onChange={this.addContact} />
+        </label>
+        <button type="submit">Add contact</button>
+      </form>
+    );
+  }
+}
